@@ -10,6 +10,8 @@ import {
 import { useSupabase } from "utils/supabase";
 import { createServerClient } from "utils/supabase.server";
 
+import "./tailwind.css";
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   // environment variables may be stored somewhere other than
   // `process.env` in runtimes other than node
