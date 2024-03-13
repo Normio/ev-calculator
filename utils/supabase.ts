@@ -18,6 +18,7 @@ export type MaybeSession = Session | null;
 export type SupabaseContext = {
   supabase: TypedSupabaseClient;
   session: MaybeSession;
+  siteUrl: string;
 };
 
 export const useSupabase = ({ env, session }: UseSupabaseArgs) => {

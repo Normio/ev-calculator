@@ -12,6 +12,18 @@ import { createServerClient } from "utils/supabase.server";
 
 import "./tailwind.css";
 
+const getURL = () => {
+  let url =
+    process?.env?.SITE_URL ?? // Set this to your site URL in production env.
+    process?.env?.VERCEL_URL ?? // Automatically set by Vercel.
+    "http://localhost:3000/";
+  // Make sure to include `https://` when not localhost.
+  url = url.includes("http") ? url : `https://${url}`;
+  // Make sure to include a trailing `/`.
+  url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
+  return url;
+};
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   // environment variables may be stored somewhere other than
   // `process.env` in runtimes other than node
@@ -19,6 +31,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const env = {
     SUPABASE_URL: process.env.SUPABASE_URL!,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!,
+    SITE_ROOT_URL: getURL(),
   };
 
   // We can retrieve the session on the server and hand it to the client.
@@ -65,5 +78,5 @@ export default function App() {
 
   const { supabase } = useSupabase({ env, session });
 
-  return <Outlet context={{ supabase, session }} />;
+  return <Outlet context={{ supabase, session, siteUrl: env.SITE_ROOT_URL }} />;
 }
