@@ -5,8 +5,8 @@ import Login from "~/components/login";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "EV calculator - Is your EV cheap to drive?" },
+    { name: "description", content: "Welcome to EV calculator" },
   ];
 };
 
