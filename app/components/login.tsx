@@ -4,6 +4,8 @@ import { SupabaseContext } from "utils/supabase";
 export default function Login() {
   const { supabase, session, siteUrl } = useOutletContext<SupabaseContext>();
 
+  console.log("Site url:", siteUrl);
+
   const handleGitHubLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
