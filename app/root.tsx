@@ -7,8 +7,8 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import { useSupabase } from "utils/supabase";
-import { createServerClient } from "utils/supabase.server";
+import { useSupabase } from "~/utils/supabase";
+import { createServerClient } from "~/utils/supabase.server";
 
 import "./tailwind.css";
 
