@@ -1,13 +1,24 @@
-import type { MetaFunction } from "@remix-run/node";
+import {
+  redirect,
+  type LoaderFunction,
+  type MetaFunction,
+} from "@remix-run/node";
 import Login from "~/components/login";
 import { LampContainer } from "~/components/ui/lamp";
 import { motion } from "framer-motion";
+import { getSession } from "~/utils/auth";
 
 export const meta: MetaFunction = () => {
   return [
     { title: "EV calculator - Is your EV cheap to drive?" },
     { name: "description", content: "Welcome to EV calculator" },
   ];
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const { session } = await getSession(request);
+
+  return session ? redirect("/dashboard") : null;
 };
 
 export default function Index() {

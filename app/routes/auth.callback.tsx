@@ -4,7 +4,7 @@ import { createServerClient } from "~/utils/supabase.server";
 export async function loader({ request }: LoaderFunctionArgs) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const next = requestUrl.searchParams.get("next") || "/";
+  const next = requestUrl.searchParams.get("next") || "/dashboard";
   let callbackHeaders = new Headers();
 
   if (code) {
