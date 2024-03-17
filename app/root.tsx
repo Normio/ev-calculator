@@ -1,28 +1,21 @@
-import { LoaderFunctionArgs, json } from "@remix-run/node";
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from "@remix-run/react";
-import { useSupabase } from "~/utils/supabase";
-import { createServerClient } from "~/utils/supabase.server";
+import { LoaderFunctionArgs, json } from '@remix-run/node'
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react'
+import { useSupabase } from '~/utils/supabase'
+import { createServerClient } from '~/utils/supabase.server'
 
-import "./tailwind.css";
+import './styles/tailwind.css'
 
 const getURL = () => {
   let url =
     process?.env?.SITE_URL ?? // Set this to your site URL in production env.
     process?.env?.VERCEL_URL ?? // Automatically set by Vercel.
-    "http://localhost:3000/";
+    'http://localhost:3000/'
   // Make sure to include `https://` when not localhost.
-  url = url.includes("http") ? url : `https://${url}`;
+  url = url.includes('http') ? url : `https://${url}`
   // Make sure to include a trailing `/`.
-  url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
-  return url;
-};
+  url = url.charAt(url.length - 1) === '/' ? url : `${url}/`
+  return url
+}
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   // environment variables may be stored somewhere other than
@@ -32,15 +25,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     SUPABASE_URL: process.env.SUPABASE_URL!,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!,
     SITE_ROOT_URL: getURL(),
-  };
+  }
 
   // We can retrieve the session on the server and hand it to the client.
   // This is used to make sure the session is available immediately upon rendering
-  const { supabase, headers } = createServerClient(request);
+  const { supabase, headers } = createServerClient(request)
 
   const {
     data: { session },
-  } = await supabase.auth.getSession();
+  } = await supabase.auth.getSession()
 
   // in order for the set-cookie header to be set,
   // headers must be returned as part of the loader response
@@ -51,9 +44,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     },
     {
       headers: headers,
-    }
-  );
-};
+    },
+  )
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -70,13 +63,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  );
+  )
 }
 
 export default function App() {
-  const { env, session } = useLoaderData<typeof loader>();
+  const { env, session } = useLoaderData<typeof loader>()
 
-  const { supabase } = useSupabase({ env, session });
+  const { supabase } = useSupabase({ env, session })
 
-  return <Outlet context={{ supabase, session, siteUrl: env.SITE_ROOT_URL }} />;
+  return <Outlet context={{ supabase, session, siteUrl: env.SITE_ROOT_URL }} />
 }
