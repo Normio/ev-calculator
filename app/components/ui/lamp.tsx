@@ -1,14 +1,11 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { cn } from '~/utils/cn'
+import { cn } from '~/lib/utils'
 
 export function LampContainer({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <div
-      className={cn(
-        'relative z-0 flex min-h-screen w-full flex-col items-center justify-center overflow-hidden rounded-md bg-slate-950',
-        className,
-      )}
+      className={cn('relative z-0 flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-slate-950', className)}
     >
       <div className="relative isolate z-0 flex w-full flex-1 scale-y-125 items-center justify-center ">
         <motion.div
