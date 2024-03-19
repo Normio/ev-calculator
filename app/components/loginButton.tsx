@@ -1,8 +1,8 @@
 import { useOutletContext } from '@remix-run/react'
-import { SupabaseContext } from '~/utils/supabase'
+import { SupabaseContext } from '~/lib/supabase'
 
-export default function Login() {
-  const { supabase, session, siteUrl } = useOutletContext<SupabaseContext>()
+export default function LoginButton({ children }: { children: React.ReactNode }) {
+  const { supabase, siteUrl } = useOutletContext<SupabaseContext>()
 
   const handleGitHubLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
@@ -17,21 +17,11 @@ export default function Login() {
     }
   }
 
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut()
-
-    if (error) {
-      console.log(error)
-    }
-  }
-
-  return session ? (
-    <button onClick={handleLogout}>Logout</button>
-  ) : (
+  return (
     <button className="relative p-[3px]" onClick={handleGitHubLogin}>
       <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-purple-400 to-indigo-400" />
       <div className="group relative rounded-[6px] bg-black px-8 py-2 text-base text-white transition duration-200 hover:bg-transparent">
-        Start tracking
+        {children}
       </div>
     </button>
   )

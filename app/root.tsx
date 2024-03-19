@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, json } from '@remix-run/node'
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react'
-import { useSupabase } from '~/utils/supabase'
-import { createServerClient } from '~/utils/supabase.server'
+import { useSupabase } from '~/lib/supabase'
+import { createServerClient } from '~/lib/supabase.server'
 
 import './styles/tailwind.css'
 
@@ -57,7 +57,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-slate-950">
         {children}
         <ScrollRestoration />
         <Scripts />

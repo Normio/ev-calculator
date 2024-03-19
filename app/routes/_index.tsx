@@ -1,8 +1,8 @@
 import { redirect, type LoaderFunction, type MetaFunction } from '@remix-run/node'
-import Login from '~/components/login'
 import { LampContainer } from '~/components/ui/lamp'
 import { motion } from 'framer-motion'
-import { getSession } from '~/utils/session.server'
+import { getSession } from '~/lib/session.server'
+import LoginButton from '~/components/loginButton'
 
 export const meta: MetaFunction = () => {
   return [{ title: 'EV calculator - Is your EV cheap to drive?' }, { name: 'description', content: 'Welcome to EV calculator' }]
@@ -35,7 +35,7 @@ export default function Index() {
           <span>
             Track your EV&apos;s consumption <br /> the right way
           </span>
-          <Login />
+          <LoginButton>Start tracking</LoginButton>
         </div>
       </motion.h1>
     </LampContainer>
