@@ -34,7 +34,7 @@ export const useSupabase = ({ env, session }: UseSupabaseArgs) => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.access_token !== serverAccessToken) {
+      if (event !== 'INITIAL_SESSION' && session?.access_token !== serverAccessToken) {
         revalidator.revalidate()
       }
     })
