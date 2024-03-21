@@ -1,10 +1,10 @@
-import { useNavigate, useOutletContext } from '@remix-run/react'
-import { SupabaseContext } from '~/lib/supabase'
+import { useNavigate } from '@remix-run/react'
 import { Button } from './ui/button'
+import { useSupabaseContext } from '~/root'
 
 export default function Logout() {
   const navigate = useNavigate()
-  const { supabase, session } = useOutletContext<SupabaseContext>()
+  const { supabase, session } = useSupabaseContext();
 
   const handleLogout = async () => {
     if (!session) {

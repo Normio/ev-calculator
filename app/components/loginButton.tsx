@@ -1,8 +1,7 @@
-import { useOutletContext } from '@remix-run/react'
-import { SupabaseContext } from '~/lib/supabase'
+import { useSupabaseContext } from '~/root'
 
 export default function LoginButton({ children }: { children: React.ReactNode }) {
-  const { supabase, siteUrl } = useOutletContext<SupabaseContext>()
+  const { supabase, siteUrl } = useSupabaseContext();
 
   const handleGitHubLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({

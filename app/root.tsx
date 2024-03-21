@@ -1,10 +1,9 @@
 import { LoaderFunctionArgs, json } from '@remix-run/node'
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react'
-import { useSupabase } from '~/lib/supabase'
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData, useOutletContext } from '@remix-run/react'
+import { SupabaseContext, useSupabase } from '~/lib/supabase'
 import { createServerClient } from '~/lib/supabase.server'
 
 import './styles/tailwind.css'
-import { User } from '@supabase/supabase-js'
 
 const getURL = () => {
   let url =
@@ -36,15 +35,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     data: { session },
   } = await supabase.auth.getSession()
 
-  const {data: { user }} = await supabase.auth.getUser();
-
   // in order for the set-cookie header to be set,
   // headers must be returned as part of the loader response
   return json(
     {
       env,
       session,
-      user,
     },
     {
       headers: headers,
@@ -71,27 +67,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const { env, session, user } = useLoaderData<typeof loader>()
+  const { env, session } = useLoaderData<typeof loader>()
 
   const { supabase } = useSupabase({ env, session })
 
-  return (
-    <div className='flex h-screen'>
-      {user && <SideNav user={user} />}
-      <Outlet context={{ supabase, session, siteUrl: env.SITE_ROOT_URL }} />
-    </div>
-  ) 
+  return <Outlet context={{ supabase, session, siteUrl: env.SITE_ROOT_URL } satisfies SupabaseContext} />
 }
 
-const SideNav = ({ user }: { user: User }) => {
-  return (
-    <nav className="h-screen w-64">
-      <div className="flex flex-col items-center justify-center h-full">
-        <div className="flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4">
-          <img src={user.user_metadata.avatar_url} alt="avatar" className="w-12 h-12 rounded-full" />
-        </div>
-        <h1 className="text-white text-center text-sm font-semibold">{user.email}</h1>
-      </div>
-    </nav>
-  )
+export const useSupabaseContext = () => {
+  return useOutletContext<SupabaseContext>()
 }
