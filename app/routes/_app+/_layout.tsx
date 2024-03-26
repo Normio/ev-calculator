@@ -25,7 +25,7 @@ export default function AppLayout() {
   return (
     <div className="flex h-screen">
       <SideNav user={user} />
-      <div className="my-2 mr-2 flex-1 rounded-lg bg-slate-800 p-4">
+      <div className="my-2 mr-2 flex-1 rounded-lg bg-slate-900 p-4">
         <Outlet context={{ ...supabaseContext } satisfies SupabaseContext} />
       </div>
     </div>
@@ -51,7 +51,9 @@ const SideNav = ({ user }: { user: User }) => {
                 variant={'menu'}
                 className={cn(
                   'flex w-full justify-start gap-4',
-                  isPending || isActive ? 'bg-slate-500/70 text-primary hover:bg-slate-500/70' : '',
+                  isPending || isActive
+                    ? 'bg-slate-500/70 text-primary hover:bg-slate-500/70'
+                    : '',
                 )}
               >
                 <span>
@@ -68,7 +70,9 @@ const SideNav = ({ user }: { user: User }) => {
                 variant={'menu'}
                 className={cn(
                   'flex w-full justify-start gap-4',
-                  isPending || isActive ? 'bg-slate-500/70 text-primary hover:bg-slate-500/70' : '',
+                  isPending || isActive
+                    ? 'bg-slate-500/70 text-primary hover:bg-slate-500/70'
+                    : '',
                 )}
               >
                 <span>
@@ -85,7 +89,9 @@ const SideNav = ({ user }: { user: User }) => {
                 variant={'menu'}
                 className={cn(
                   'flex w-full justify-start gap-4',
-                  isPending || isActive ? 'bg-slate-500/70 text-primary hover:bg-slate-500/70' : '',
+                  isPending || isActive
+                    ? 'bg-slate-500/70 text-primary hover:bg-slate-500/70'
+                    : '',
                 )}
               >
                 <span>
@@ -99,11 +105,17 @@ const SideNav = ({ user }: { user: User }) => {
         <div className="my-4 mt-auto flex w-full items-center gap-4">
           <Avatar>
             <AvatarImage src={user.user_metadata.avatar_url} alt="avatar" />
-            <AvatarFallback className="bg-purple-800 text-primary">{abbreviate(user.user_metadata.full_name, 'WOW')}</AvatarFallback>
+            <AvatarFallback className="bg-purple-800 text-primary">
+              {abbreviate(user.user_metadata.full_name, 'WOW')}
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-1 flex-col overflow-hidden">
-            <span className="truncate text-sm text-primary">{user.user_metadata.name}</span>
-            <span className="truncate text-xs text-primary/70">{user.email}</span>
+            <span className="truncate text-sm text-primary">
+              {user.user_metadata.name}
+            </span>
+            <span className="truncate text-xs text-primary/70">
+              {user.email}
+            </span>
           </div>
           <LogoutButton />
         </div>

@@ -1,15 +1,20 @@
 import { LoaderFunctionArgs, json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { requireUser } from '~/lib/session.server'
 import { createServerClient } from '~/lib/supabase.server'
+import { DataTable } from './data-table'
+import { Vehicle, columns } from './columns'
+import { Tables } from 'db_types'
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+  await requireUser(request)
   const { supabase } = createServerClient(request)
 
   const { data, error } = await supabase.from('vehicle').select()
 
   if (error) {
     return json({
-      vehicles: [],
+      vehicles: [] as Tables<'vehicle'>[],
       error: 'Error fetching vehicles. Try again later.',
     })
   }
@@ -30,7 +35,7 @@ export default function Vehicles() {
   return (
     <>
       <h1>Vehicles</h1>
-      <pre>{JSON.stringify(vehicles, null, 2)}</pre>
+      <DataTable data={vehicles as Vehicle[]} columns={columns} />
     </>
   )
 }
