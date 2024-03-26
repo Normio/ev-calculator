@@ -1,10 +1,11 @@
 import { useNavigate } from '@remix-run/react'
 import { Button } from './ui/button'
 import { useSupabaseContext } from '~/root'
+import { LogOut, icons } from 'lucide-react'
 
 export default function Logout() {
   const navigate = useNavigate()
-  const { supabase, session } = useSupabaseContext();
+  const { supabase, session } = useSupabaseContext()
 
   const handleLogout = async () => {
     if (!session) {
@@ -21,8 +22,8 @@ export default function Logout() {
   }
 
   return (
-    <Button onClick={handleLogout} variant={'outline'}>
-      Logout
+    <Button onClick={handleLogout} variant="ghost" size={'icon'} className="h-10 min-w-10 rounded-full">
+      <LogOut className="h-4 w-4" />
     </Button>
   )
 }
