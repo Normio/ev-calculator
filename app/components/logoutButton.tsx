@@ -1,7 +1,7 @@
 import { useNavigate } from '@remix-run/react'
 import { Button } from './ui/button'
 import { useSupabaseContext } from '~/root'
-import { LogOut, icons } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 
 export default function Logout() {
   const navigate = useNavigate()
