@@ -36,22 +36,31 @@ export type Database = {
     Tables: {
       vehicle: {
         Row: {
+          brand: string | null
           created_at: string
           id: string
+          model: string | null
           name: string
           user_id: string
+          vehicle_type: string
         }
         Insert: {
+          brand?: string | null
           created_at?: string
           id?: string
+          model?: string | null
           name: string
           user_id?: string
+          vehicle_type?: string
         }
         Update: {
+          brand?: string | null
           created_at?: string
           id?: string
+          model?: string | null
           name?: string
           user_id?: string
+          vehicle_type?: string
         }
         Relationships: [
           {
