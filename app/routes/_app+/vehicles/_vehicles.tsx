@@ -33,9 +33,11 @@ export default function Vehicles() {
   }
 
   return (
-    <>
-      <h1>Vehicles</h1>
-      <DataTable data={vehicles as Vehicle[]} columns={columns} />
-    </>
+    <div className="flex flex-col gap-8">
+      <h1 className="text-2xl">Vehicles</h1>
+      <div className="md:mx-auto md:min-w-[36rem]">
+        <DataTable data={vehicles as Vehicle[]} columns={columns} />
+      </div>
+    </div>
   )
 }
